@@ -1,12 +1,14 @@
 package imd0412.drugreminder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DrugReminderImpl implements IReminder {
 	
 	private String nameMedication;
 	private String dosage;
-	private DrugDate startTime;
+	private String startTime;
+	private DrugDate time;
 	private Frequency frequency;
 	private Integer duration;
 	
@@ -14,7 +16,7 @@ public class DrugReminderImpl implements IReminder {
 		
 	}
 	
-	public DrugReminderImpl(String nameMedication, String dosage, DrugDate startTime, Frequency frequency, Integer duration) {
+	public DrugReminderImpl(String nameMedication, String dosage, String startTime, Frequency frequency, Integer duration) {
 		this.nameMedication = nameMedication;
 		this.dosage = dosage;
 		this.startTime = startTime;
@@ -38,11 +40,11 @@ public class DrugReminderImpl implements IReminder {
 		this.dosage = dosage;
 	}
 
-	public DrugDate getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(DrugDate startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
@@ -62,9 +64,43 @@ public class DrugReminderImpl implements IReminder {
 		this.duration = duration;
 	}
 
-	public List<String> createReminders(DrugDate startTime, Frequency frequency, Integer duration) {
-		throw new IllegalStateException("Method createReminders not yet implemented.");
+	public DrugDate getTime() {
+		return time;
+	}
+
+	public void setTime(DrugDate time) {
+		this.time = time;
+	}
+
+	public List<String> createReminders(String startTime, Frequency frequency, Integer duration) {
+		//throw new IllegalStateException("Method createReminders not yet implemented.");
+		
+		
+		List<String> reminders = new ArrayList<String>();
+		
+		time.convertDate(startTime);
+		
+		if(frequency == Frequency.SIX_HOURS) {
+			time.sixHours(day, month, year, hour, minutes, duration);
+		}
+		if(frequency == Frequency.EIGHT_HOURS) {
+			time.eightHours(day, month, year, hour, minutes, duration);
+		}
+		if(frequency == Frequency.TWELVE_HOURS) {
+			time.twelveHours(day, month, year, hour, minutes, duration);
+		}
+		if(frequency == Frequency.TWENTYFOUR_HOURS) {
+			time.twentyFourHours(day, month, year, hour, minutes, duration);
+		}
+		
+		time.toString();
+		
+		
+		return reminders;
+		
 				
 	}
+	
+	
 
 }
